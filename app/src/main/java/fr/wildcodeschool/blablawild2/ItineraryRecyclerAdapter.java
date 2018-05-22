@@ -1,11 +1,26 @@
 package fr.wildcodeschool.blablawild2;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ItineraryRecyclerAdapter extends RecyclerView.Adapter{
+public class ItineraryRecyclerAdapter extends RecyclerView.Adapter<ItineraryRecyclerAdapter.ViewHolder>{
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvDate, tvDriver, tvPrice;
+
+        public ViewHolder(View v) {
+            super(v);
+            this.tvDate = v.findViewById(R.id.tv_date);
+            this.tvDriver = v.findViewById(R.id.tv_driver);
+            this.tvPrice = v.findViewById(R.id.tv_price);
+        }
+    }
+
 
     // TODO : ajouter le constructeur initialisant la liste d'itinéraires
 
@@ -16,18 +31,24 @@ public class ItineraryRecyclerAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ItineraryRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // TODO : associer le layout utilisé par un item
-        return null;
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_itinerary, parent, false);
+
+        return new ViewHolder(itemView);
     }
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+    public void onBindViewHolder(ItineraryRecyclerAdapter.ViewHolder holder, int position) {
         // TODO : action à l'affichage d'un item
-
+        ItineraryModel itineraryModel = mItineraries.get(position);
+        holder.tvDriver.setText(itineraryModel.getDriver());
+        holder.tvDate.setText(itineraryModel.getDate().toString());
+        holder.tvPrice.setText(String.valueOf(itineraryModel.getPrice()));
     }
 
-    @Override
+        @Override
     public int getItemCount() {
         // TODO : modifier pour afficher le nombre d'itinéraires
         return mItineraries.size();
